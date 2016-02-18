@@ -320,7 +320,7 @@ json_encode(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
     yajl_gen_config config = {0, NULL};
     yajl_gen handle = yajl_gen_alloc(&config, NULL);
     yajl_gen_status status;
-    ERL_NIF_TERM ret = enif_make_badarg(env);
+    ERL_NIF_TERM ret = 0;
     ErlNifBinary bin;
     const unsigned char* json;
     unsigned int jsonlen;
@@ -381,5 +381,5 @@ json_encode(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 
 done:
     if(handle != NULL) yajl_gen_free(handle);
-    return ret;
+    return ret ? ret : enif_make_badarg(env);
 }
